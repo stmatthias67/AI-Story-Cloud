@@ -1,0 +1,10 @@
+{
+  "name": "schau-nicht-hoch-teil-01-fussspuren",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "check": "npx --yes hyperframes@0.9.17 check",
+    "preview": "npx --yes hyperframes@0.9.17 preview",
+    "render": "npx --yes hyperframes@0.9.17 render --output out/teil-01-fussspuren.mp4"
+  }
+}
