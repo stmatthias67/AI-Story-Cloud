@@ -6,6 +6,9 @@
     <script src="assets/gsap.min.js"></script>
     <script src="assets/figure.js"></script>
     <style>
+      @font-face { font-family: "Archivo Black"; src: url("assets/fonts/archivo-black-latin-400-normal.woff2") format("woff2"); font-weight: 400; font-style: normal; }
+      @font-face { font-family: "Inter"; src: url("assets/fonts/inter-latin-700-normal.woff2") format("woff2"); font-weight: 700; font-style: normal; }
+      @font-face { font-family: "Inter"; src: url("assets/fonts/inter-latin-900-normal.woff2") format("woff2"); font-weight: 900; font-style: normal; }
       :root {
         --ground: #070b14;
         --ink: #ffffff;
@@ -24,40 +27,9 @@
       }
       .clip { position: absolute; inset: 0; }
       .scene { z-index: 1; }
-
-      /* HUD: unverändert übernommen */
-      #hud { top: 0; left: 0; width: 1080px; height: 1920px; pointer-events: none; z-index: 20; }
-      #hud-tag {
-        position: absolute; left: 70px; top: 96px;
-        display: flex; align-items: center; gap: 14px;
-        font-weight: 900; font-size: 34px; letter-spacing: 0.12em; text-transform: uppercase;
-      }
-      #hud-tag .bar { width: 8px; height: 42px; background: var(--alert); }
-      #hud-clock {
-        position: absolute; left: 70px; top: 150px;
-        font-weight: 900; font-size: 96px; letter-spacing: -0.02em;
-      }
-      #hud-clock span { font-size: 34px; opacity: 0.7; margin-left: 16px; letter-spacing: 0.06em; }
-      .loc {
-        position: absolute; right: 70px; top: 120px; z-index: 20;
-        font-weight: 900; font-size: 34px; letter-spacing: 0.12em; text-transform: uppercase;
-        color: #ffffff; opacity: 0.95; text-shadow: 0 3px 14px rgba(0,0,0,0.9);
-      }
-      #watermark {
-        position: absolute; right: 70px; bottom: 360px; padding: 6px 16px; border-radius: 10px;
-        background: rgba(7,11,20,0.7);
-        font-weight: 700; font-size: 34px; color: #ffffff;
-      }
-      #wm { z-index: 20; }
-
-      /* Untertitel: eine Gruppe pro Satz, Schlüsselwort gelb */
+      #hud { z-index: 20; }
+      #labels { z-index: 20; }
       #captions { z-index: 30; }
-      .cap {
-        position: absolute; left: 50px; width: 980px; top: 1120px; text-align: center;
-        font-family: var(--font-ui); font-weight: 900; font-size: 88px; line-height: 1.1;
-        text-transform: uppercase; text-shadow: 0 6px 24px rgba(0,0,0,0.9); overflow: visible; opacity: 0;
-      }
-      .cap .k { color: var(--accent); }
     </style>
   </head>
   <body>
@@ -69,102 +41,31 @@
       data-width="1080"
       data-height="1920"
     >
-      <div id="s1-titel" class="clip scene" data-composition-id="s1-titel" data-composition-src="compositions/s1-titel.html" data-start="0" data-duration="2" data-track-index="1" data-width="1080" data-height="1920"></div>
-      <div id="s2-schlafzimmer" class="clip scene" data-composition-id="s2-schlafzimmer" data-composition-src="compositions/s2-schlafzimmer.html" data-start="2" data-duration="4.3" data-track-index="1" data-width="1080" data-height="1920"></div>
-      <div id="s3-hof" class="clip scene" data-composition-id="s3-hof" data-composition-src="compositions/s3-hof.html" data-start="6.3" data-duration="4.2" data-track-index="1" data-width="1080" data-height="1920"></div>
-      <div id="s4-flur" class="clip scene" data-composition-id="s4-flur" data-composition-src="compositions/s4-flur.html" data-start="10.5" data-duration="3.1" data-track-index="1" data-width="1080" data-height="1920"></div>
-      <div id="s5-schloss" class="clip scene" data-composition-id="s5-schloss" data-composition-src="compositions/s5-schloss.html" data-start="13.6" data-duration="3.1" data-track-index="1" data-width="1080" data-height="1920"></div>
-      <div id="s6-treppenhaus" class="clip scene" data-composition-id="s6-treppenhaus" data-composition-src="compositions/s6-treppenhaus.html" data-start="16.7" data-duration="2.4" data-track-index="1" data-width="1080" data-height="1920"></div>
-      <div id="s7-decke" class="clip scene" data-composition-id="s7-decke" data-composition-src="compositions/s7-decke.html" data-start="19.1" data-duration="6.4" data-track-index="1" data-width="1080" data-height="1920"></div>
-      <div id="s8-abspann" class="clip scene" data-composition-id="s8-abspann" data-composition-src="compositions/s8-abspann.html" data-start="25.5" data-duration="4.5" data-track-index="1" data-width="1080" data-height="1920"></div>
+      <div id="s1-titel" class="clip scene" data-composition-id="s1-titel" data-composition-src="compositions/s1-titel.html" data-start="0.00" data-duration="2.00" data-track-index="1" data-width="1080" data-height="1920"></div>
+      <div id="s2-schlafzimmer" class="clip scene" data-composition-id="s2-schlafzimmer" data-composition-src="compositions/s2-schlafzimmer.html" data-start="2.00" data-duration="4.30" data-track-index="1" data-width="1080" data-height="1920"></div>
+      <div id="s3-hof" class="clip scene" data-composition-id="s3-hof" data-composition-src="compositions/s3-hof.html" data-start="6.30" data-duration="4.20" data-track-index="1" data-width="1080" data-height="1920"></div>
+      <div id="s4-flur" class="clip scene" data-composition-id="s4-flur" data-composition-src="compositions/s4-flur.html" data-start="10.50" data-duration="3.10" data-track-index="1" data-width="1080" data-height="1920"></div>
+      <div id="s5-schloss" class="clip scene" data-composition-id="s5-schloss" data-composition-src="compositions/s5-schloss.html" data-start="13.60" data-duration="3.10" data-track-index="1" data-width="1080" data-height="1920"></div>
+      <div id="s6-treppenhaus" class="clip scene" data-composition-id="s6-treppenhaus" data-composition-src="compositions/s6-treppenhaus.html" data-start="16.70" data-duration="2.40" data-track-index="1" data-width="1080" data-height="1920"></div>
+      <div id="s7-decke" class="clip scene" data-composition-id="s7-decke" data-composition-src="compositions/s7-decke.html" data-start="19.10" data-duration="6.40" data-track-index="1" data-width="1080" data-height="1920"></div>
+      <div id="s8-abspann" class="clip scene" data-composition-id="s8-abspann" data-composition-src="compositions/s8-abspann.html" data-start="25.50" data-duration="4.50" data-track-index="1" data-width="1080" data-height="1920"></div>
+      <!-- HUD: Serientag, Uhrzeit, Wasserzeichen (Teilkomposition) -->
+      <div id="hud" class="clip" data-composition-id="hud" data-composition-src="compositions/hud.html" data-start="0" data-duration="30" data-track-index="2" data-width="1080" data-height="1920"></div>
 
-      <!-- HUD: Serientag, Uhrzeit, Wasserzeichen (unverändert) -->
-      <div id="hud" class="clip" data-start="0" data-duration="30" data-track-index="2">
-        <div id="hud-tag"><div class="bar"></div>NACHT 1</div>
-        <div id="hud-clock">03:12<span>UHR</span></div>
-      </div>
-      <div id="wm" class="clip" data-start="0" data-duration="30" data-track-index="2">
-        <div id="watermark">@deinhandle</div>
-      </div>
+      <!-- Ortslabel: wechselt pro Szene (Teilkomposition) -->
+      <div id="labels" class="clip" data-composition-id="labels" data-composition-src="compositions/labels.html" data-start="0" data-duration="30" data-track-index="3" data-width="1080" data-height="1920"></div>
 
-      <!-- Ortslabel: wechselt pro Szene -->
-      <div id="loc-1" class="clip" data-start="0" data-duration="2" data-track-index="3"><div class="loc">Draußen</div></div>
-      <div id="loc-2" class="clip" data-start="2" data-duration="4.3" data-track-index="3"><div class="loc">Fenster</div></div>
-      <div id="loc-3" class="clip" data-start="6.3" data-duration="4.2" data-track-index="3"><div class="loc">Hof</div></div>
-      <div id="loc-4" class="clip" data-start="10.5" data-duration="3.1" data-track-index="3"><div class="loc">Flur</div></div>
-      <div id="loc-5" class="clip" data-start="13.6" data-duration="3.1" data-track-index="3"><div class="loc">Haustür</div></div>
-      <div id="loc-6" class="clip" data-start="16.7" data-duration="2.4" data-track-index="3"><div class="loc">Treppenhaus</div></div>
-      <div id="loc-7" class="clip" data-start="19.1" data-duration="6.4" data-track-index="3"><div class="loc">Decke</div></div>
-      <div id="loc-8" class="clip" data-start="25.5" data-duration="4.5" data-track-index="3"><div class="loc">Entscheidung</div></div>
+      <!-- Untertitel: eine Gruppe pro Sprechsegment (Teilkomposition) -->
+      <div id="captions" class="clip" data-composition-id="captions" data-composition-src="compositions/captions.html" data-track-kind="captions" data-start="0" data-duration="30" data-track-index="4" data-width="1080" data-height="1920"></div>
 
-      <!-- Untertitel: eine Gruppe pro Sprechsegment -->
-      <div id="captions" data-track-kind="captions" class="clip" data-start="0" data-duration="30" data-track-index="4">
-      <div id="cap-01" class="cap">Mitten in der <span class="k">Nacht</span></div>
-      <div id="cap-02" class="cap">schaue ich aus dem <span class="k">Fenster.</span></div>
-      <div id="cap-03" class="cap">Im frischen Schnee: <span class="k">Fußspuren.</span></div>
-      <div id="cap-04" class="cap">Sie führen <span class="k">nicht vom Haus weg.</span></div>
-      <div id="cap-05" class="cap">Sie führen direkt <span class="k">auf meine Tür zu.</span></div>
-      <div id="cap-06" class="cap">Ich laufe <span class="k">runter.</span></div>
-      <div id="cap-07" class="cap">Ich prüfe <span class="k">das Schloss.</span></div>
-      <div id="cap-08" class="cap"><span class="k">Verriegelt.</span></div>
-      <div id="cap-09" class="cap">Alles <span class="k">zu.</span></div>
-      <div id="cap-10" class="cap">Dann <span class="k">knackt es.</span></div>
-      <div id="cap-11" class="cap">Im <span class="k">zweiten Stock.</span></div>
-      <div id="cap-12" class="cap">Und dann …</div>
-      <div id="cap-13" class="cap"><span class="k">Schritte.</span></div>
-      <div id="cap-14" class="cap">Genau über <span class="k">meinem Kopf.</span></div>
-      </div>
-
-      <!-- Tonspur: Wind, Schläge, Knacken (leiser) und Stimme (Vincent Crowe, ab 2,02 s) -->
-      <audio id="sfx" src="assets/sfx.wav" data-start="0" data-duration="30" data-volume="0.3"></audio>
+      <!-- Tonspur: Wind-Bett (bearbeitet), Schläge (deterministisch), Stimme (ab 2,02 s) -->
+      <audio id="sfx" src="assets/sfx-bed.wav" data-start="0" data-duration="30" data-volume="1"></audio>
+      <audio id="hits" src="assets/hits.wav" data-start="0" data-duration="30" data-volume="1"></audio>
       <audio id="voice" src="assets/voice-timed.wav" data-start="0" data-duration="30" data-volume="1"></audio>
     </div>
 
     <script>
       const tl = gsap.timeline({ paused: true });
-tl.fromTo("#cap-01", { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: 0.12, ease: "power2.out" }, 2.02);
-tl.to("#cap-01", { opacity: 0, duration: 0.12, ease: "power2.in" }, 3.23);
-tl.set("#cap-01", { opacity: 0, visibility: "hidden" }, 3.35);
-tl.fromTo("#cap-02", { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: 0.12, ease: "power2.out" }, 3.35);
-tl.to("#cap-02", { opacity: 0, duration: 0.12, ease: "power2.in" }, 4.53);
-tl.set("#cap-02", { opacity: 0, visibility: "hidden" }, 4.65);
-tl.fromTo("#cap-03", { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: 0.12, ease: "power2.out" }, 5.27);
-tl.to("#cap-03", { opacity: 0, duration: 0.12, ease: "power2.in" }, 6.16);
-tl.set("#cap-03", { opacity: 0, visibility: "hidden" }, 6.28);
-tl.fromTo("#cap-04", { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: 0.12, ease: "power2.out" }, 6.75);
-tl.to("#cap-04", { opacity: 0, duration: 0.12, ease: "power2.in" }, 7.56);
-tl.set("#cap-04", { opacity: 0, visibility: "hidden" }, 7.68);
-tl.fromTo("#cap-05", { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: 0.12, ease: "power2.out" }, 8.32);
-tl.to("#cap-05", { opacity: 0, duration: 0.12, ease: "power2.in" }, 9.91);
-tl.set("#cap-05", { opacity: 0, visibility: "hidden" }, 10.03);
-tl.fromTo("#cap-06", { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: 0.12, ease: "power2.out" }, 10.52);
-tl.to("#cap-06", { opacity: 0, duration: 0.12, ease: "power2.in" }, 11.28);
-tl.set("#cap-06", { opacity: 0, visibility: "hidden" }, 11.4);
-tl.fromTo("#cap-07", { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: 0.12, ease: "power2.out" }, 11.4);
-tl.to("#cap-07", { opacity: 0, duration: 0.12, ease: "power2.in" }, 12.79);
-tl.set("#cap-07", { opacity: 0, visibility: "hidden" }, 12.91);
-tl.fromTo("#cap-08", { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: 0.12, ease: "power2.out" }, 13.58);
-tl.to("#cap-08", { opacity: 0, duration: 0.12, ease: "power2.in" }, 14.39);
-tl.set("#cap-08", { opacity: 0, visibility: "hidden" }, 14.51);
-tl.fromTo("#cap-09", { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: 0.12, ease: "power2.out" }, 15.02);
-tl.to("#cap-09", { opacity: 0, duration: 0.12, ease: "power2.in" }, 16.05);
-tl.set("#cap-09", { opacity: 0, visibility: "hidden" }, 16.17);
-tl.fromTo("#cap-10", { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: 0.12, ease: "power2.out" }, 16.72);
-tl.to("#cap-10", { opacity: 0, duration: 0.12, ease: "power2.in" }, 17.28);
-tl.set("#cap-10", { opacity: 0, visibility: "hidden" }, 17.4);
-tl.fromTo("#cap-11", { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: 0.12, ease: "power2.out" }, 17.77);
-tl.to("#cap-11", { opacity: 0, duration: 0.12, ease: "power2.in" }, 18.33);
-tl.set("#cap-11", { opacity: 0, visibility: "hidden" }, 18.45);
-tl.fromTo("#cap-12", { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: 0.12, ease: "power2.out" }, 19.14);
-tl.to("#cap-12", { opacity: 0, duration: 0.12, ease: "power2.in" }, 20.07);
-tl.set("#cap-12", { opacity: 0, visibility: "hidden" }, 20.19);
-tl.fromTo("#cap-13", { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: 0.12, ease: "power2.out" }, 20.56);
-tl.to("#cap-13", { opacity: 0, duration: 0.12, ease: "power2.in" }, 21.4);
-tl.set("#cap-13", { opacity: 0, visibility: "hidden" }, 21.52);
-tl.fromTo("#cap-14", { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: 0.12, ease: "power2.out" }, 21.93);
-tl.to("#cap-14", { opacity: 0, duration: 0.12, ease: "power2.in" }, 25.28);
-tl.set("#cap-14", { opacity: 0, visibility: "hidden" }, 25.4);
-
       window.__timelines["main"] = tl;
       tl.seek(0);
     </script>

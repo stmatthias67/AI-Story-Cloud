@@ -1,0 +1,31 @@
+<template>
+<style>
+
+#root { position:absolute; inset:0; overflow:hidden; font-family:"Inter",sans-serif; color:#fff; }
+.bg { position:absolute; left:0; top:0; width:1080px; height:1920px; overflow:hidden; }
+.abs { position:absolute; }
+
+#hud-tag {
+  position: absolute; left: 70px; top: 96px; display: flex; align-items: center; gap: 14px;
+  font-weight: 900; font-size: 34px; letter-spacing: 0.12em; text-transform: uppercase;
+}
+#hud-tag .bar { width: 8px; height: 42px; background: #ff3b3b; }
+#hud-clock { position: absolute; left: 70px; top: 150px; font-weight: 900; font-size: 96px; letter-spacing: -0.02em; }
+#hud-clock span { font-size: 34px; opacity: 0.7; margin-left: 16px; letter-spacing: 0.06em; }
+#watermark {
+  position: absolute; right: 70px; bottom: 360px; padding: 6px 16px; border-radius: 10px;
+  background: rgba(7,11,20,0.7); font-weight: 700; font-size: 34px; color: #ffffff;
+}
+
+</style>
+<div id="root" data-composition-id="hud" data-width="1080" data-height="1920">
+<div id="hud-tag"><div class="bar"></div>NACHT 1</div><div id="hud-clock">03:12<span>UHR</span></div><div id="watermark">@deinhandle</div>
+</div>
+<script>
+(function () {
+const tl = gsap.timeline({ paused: true });
+
+window.__timelines["hud"] = tl;
+})();
+</script>
+</template>

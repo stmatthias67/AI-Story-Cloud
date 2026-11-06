@@ -1,0 +1,89 @@
+<template>
+<style>
+
+#root { position:absolute; inset:0; overflow:hidden; font-family:"Inter",sans-serif; color:#fff; }
+.bg { position:absolute; left:0; top:0; width:1080px; height:1920px; overflow:hidden; }
+.abs { position:absolute; }
+
+.cap {
+  position: absolute; left: 50px; width: 980px; top: 1120px; text-align: center;
+  font-family: "Inter", sans-serif; font-weight: 900; font-size: 88px; line-height: 1.1;
+  text-transform: uppercase; overflow: visible; opacity: 0; visibility: hidden;
+}
+.cap .scrim {
+  display: inline-block; background: rgba(7,11,20,0.55); padding: 6px 22px; border-radius: 6px;
+  text-shadow: 0 6px 24px rgba(0,0,0,0.85);
+}
+.cap .k { color: #ffe14d; }
+
+</style>
+<div id="root" data-composition-id="captions" data-width="1080" data-height="1920">
+<div id="cap-01" class="cap"><span class="scrim">Mitten in der <span class="k">Nacht</span></span></div>
+<div id="cap-02" class="cap"><span class="scrim">schaue ich aus dem <span class="k">Fenster.</span></span></div>
+<div id="cap-03" class="cap"><span class="scrim">Im frischen Schnee: <span class="k">Fußspuren.</span></span></div>
+<div id="cap-04" class="cap"><span class="scrim">Sie führen <span class="k">nicht vom Haus weg.</span></span></div>
+<div id="cap-05" class="cap"><span class="scrim">Sie führen direkt <span class="k">auf meine Tür zu.</span></span></div>
+<div id="cap-06" class="cap"><span class="scrim">Ich laufe <span class="k">runter.</span></span></div>
+<div id="cap-07" class="cap"><span class="scrim">Ich prüfe <span class="k">das Schloss.</span></span></div>
+<div id="cap-08" class="cap"><span class="scrim"><span class="k">Verriegelt.</span></span></div>
+<div id="cap-09" class="cap"><span class="scrim">Alles <span class="k">zu.</span></span></div>
+<div id="cap-10" class="cap"><span class="scrim">Dann <span class="k">knackt es.</span></span></div>
+<div id="cap-11" class="cap"><span class="scrim">Im <span class="k">zweiten Stock.</span></span></div>
+<div id="cap-12" class="cap"><span class="scrim">Und dann …</span></div>
+<div id="cap-13" class="cap"><span class="scrim"><span class="k">Schritte.</span></span></div>
+<div id="cap-14a" class="cap"><span class="scrim">Genau <span class="k">über</span></span></div>
+<div id="cap-14b" class="cap"><span class="scrim">meinem <span class="k">Kopf.</span></span></div>
+
+</div>
+<script>
+(function () {
+const tl = gsap.timeline({ paused: true });
+tl.fromTo("#cap-01", { opacity: 0, visibility: "visible" }, { opacity: 1, visibility: "visible", duration: 0.12, ease: "power2.out" }, 2.02);
+tl.to("#cap-01", { opacity: 0, duration: 0.12, ease: "power2.in" }, 3.23);
+tl.set("#cap-01", { opacity: 0, visibility: "hidden" }, 3.35);
+tl.fromTo("#cap-02", { opacity: 0, visibility: "visible" }, { opacity: 1, visibility: "visible", duration: 0.12, ease: "power2.out" }, 3.35);
+tl.to("#cap-02", { opacity: 0, duration: 0.12, ease: "power2.in" }, 4.53);
+tl.set("#cap-02", { opacity: 0, visibility: "hidden" }, 4.65);
+tl.fromTo("#cap-03", { opacity: 0, visibility: "visible" }, { opacity: 1, visibility: "visible", duration: 0.12, ease: "power2.out" }, 5.27);
+tl.to("#cap-03", { opacity: 0, duration: 0.12, ease: "power2.in" }, 6.16);
+tl.set("#cap-03", { opacity: 0, visibility: "hidden" }, 6.28);
+tl.fromTo("#cap-04", { opacity: 0, visibility: "visible" }, { opacity: 1, visibility: "visible", duration: 0.12, ease: "power2.out" }, 6.75);
+tl.to("#cap-04", { opacity: 0, duration: 0.12, ease: "power2.in" }, 7.56);
+tl.set("#cap-04", { opacity: 0, visibility: "hidden" }, 7.68);
+tl.fromTo("#cap-05", { opacity: 0, visibility: "visible" }, { opacity: 1, visibility: "visible", duration: 0.12, ease: "power2.out" }, 8.32);
+tl.to("#cap-05", { opacity: 0, duration: 0.12, ease: "power2.in" }, 9.91);
+tl.set("#cap-05", { opacity: 0, visibility: "hidden" }, 10.03);
+tl.fromTo("#cap-06", { opacity: 0, visibility: "visible" }, { opacity: 1, visibility: "visible", duration: 0.12, ease: "power2.out" }, 10.52);
+tl.to("#cap-06", { opacity: 0, duration: 0.12, ease: "power2.in" }, 11.28);
+tl.set("#cap-06", { opacity: 0, visibility: "hidden" }, 11.40);
+tl.fromTo("#cap-07", { opacity: 0, visibility: "visible" }, { opacity: 1, visibility: "visible", duration: 0.12, ease: "power2.out" }, 11.40);
+tl.to("#cap-07", { opacity: 0, duration: 0.12, ease: "power2.in" }, 12.79);
+tl.set("#cap-07", { opacity: 0, visibility: "hidden" }, 12.91);
+tl.fromTo("#cap-08", { opacity: 0, visibility: "visible" }, { opacity: 1, visibility: "visible", duration: 0.12, ease: "power2.out" }, 13.58);
+tl.to("#cap-08", { opacity: 0, duration: 0.12, ease: "power2.in" }, 14.39);
+tl.set("#cap-08", { opacity: 0, visibility: "hidden" }, 14.51);
+tl.fromTo("#cap-09", { opacity: 0, visibility: "visible" }, { opacity: 1, visibility: "visible", duration: 0.12, ease: "power2.out" }, 15.02);
+tl.to("#cap-09", { opacity: 0, duration: 0.12, ease: "power2.in" }, 16.05);
+tl.set("#cap-09", { opacity: 0, visibility: "hidden" }, 16.17);
+tl.fromTo("#cap-10", { opacity: 0, visibility: "visible" }, { opacity: 1, visibility: "visible", duration: 0.12, ease: "power2.out" }, 16.72);
+tl.to("#cap-10", { opacity: 0, duration: 0.12, ease: "power2.in" }, 17.28);
+tl.set("#cap-10", { opacity: 0, visibility: "hidden" }, 17.40);
+tl.fromTo("#cap-11", { opacity: 0, visibility: "visible" }, { opacity: 1, visibility: "visible", duration: 0.12, ease: "power2.out" }, 17.77);
+tl.to("#cap-11", { opacity: 0, duration: 0.12, ease: "power2.in" }, 18.33);
+tl.set("#cap-11", { opacity: 0, visibility: "hidden" }, 18.45);
+tl.fromTo("#cap-12", { opacity: 0, visibility: "visible" }, { opacity: 1, visibility: "visible", duration: 0.12, ease: "power2.out" }, 19.14);
+tl.to("#cap-12", { opacity: 0, duration: 0.12, ease: "power2.in" }, 20.07);
+tl.set("#cap-12", { opacity: 0, visibility: "hidden" }, 20.19);
+tl.fromTo("#cap-13", { opacity: 0, visibility: "visible" }, { opacity: 1, visibility: "visible", duration: 0.12, ease: "power2.out" }, 20.56);
+tl.to("#cap-13", { opacity: 0, duration: 0.12, ease: "power2.in" }, 21.40);
+tl.set("#cap-13", { opacity: 0, visibility: "hidden" }, 21.52);
+tl.fromTo("#cap-14a", { opacity: 0, visibility: "visible" }, { opacity: 1, visibility: "visible", duration: 0.12, ease: "power2.out" }, 21.93);
+tl.to("#cap-14a", { opacity: 0, duration: 0.12, ease: "power2.in" }, 23.18);
+tl.set("#cap-14a", { opacity: 0, visibility: "hidden" }, 23.30);
+tl.fromTo("#cap-14b", { opacity: 0, visibility: "visible" }, { opacity: 1, visibility: "visible", duration: 0.12, ease: "power2.out" }, 23.35);
+tl.to("#cap-14b", { opacity: 0, duration: 0.12, ease: "power2.in" }, 25.30);
+tl.set("#cap-14b", { opacity: 0, visibility: "hidden" }, 25.42);
+window.__timelines["captions"] = tl;
+})();
+</script>
+</template>
