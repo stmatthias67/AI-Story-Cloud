@@ -23,12 +23,13 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 OUT = os.path.join(HERE, "..", "assets", "hits.wav")
 BED = os.path.join(HERE, "..", "assets", "sfx-bed.wav")
 # SPEC 7: Bett-Gain in der Mischung (index.html data-volume 0.45). Schläge werden auf das
-# effektive Bett gepegelt: Peak jedes Schlags im Fenster [Cue, Cue+WINDOW] liegt TARGET_DB
-# über dem Peak des Betts (mit BED_GAIN) im gleichen Fenster. 4.5 dB ist die Mitte von 3-6 dB.
+# effektive Bett gepegelt: Peak jedes Schlags im Fenster [Einsatz, Einsatz+WINDOW] liegt TARGET_DB
+# über dem Peak des Betts (mit BED_GAIN) im gleichen Fenster. Einsatz = Cue + LATENCY.
+# 4.5 dB ist die Mitte von 3-6 dB. Messfenster 66 ms ab Einsatz: kürzer als der Abstand der
+# Klicks (0.10 s), damit der nächste Schlag nicht mitzählt (ein 120-ms-Fenster überlappt die Klicks).
 BED_GAIN = 0.45
 TARGET_DB = 4.5
-# Messfenster kleiner als der kleinste Schlagabstand (0.10 s): Nachbarschläge zählen nicht mit
-WINDOW = 0.09
+WINDOW = 0.066
 
 
 class Lfsr:
@@ -80,13 +81,13 @@ class Bus:
         self.level(i0, local)
 
     def level(self, i0, local):
-        j0 = int(round(self.cue * SR))
-        j1 = min(N, j0 + int(round(WINDOW * SR)))
+        # i0 ist der Einsatz des Schlags (Sample), local[0] liegt bei i0
+        j0 = i0
+        j1 = min(N, i0 + int(round(WINDOW * SR)))
         bed_peak = max(self.bed[j0:j1]) * BED_GAIN
         hit_peak = 0.0
-        for i in range(j0, j1):
-            k = i - i0
-            if 0 <= k < len(local):
+        for k in range(0, j1 - j0):
+            if k < len(local):
                 hit_peak = max(hit_peak, abs(local[k]))
         if bed_peak <= 0.0 or hit_peak <= 0.0:
             raise ValueError("no level reference at cue %.2f" % self.cue)
@@ -191,9 +192,9 @@ def cues():
     # Schnee: zehn Schritte in den Schnee (SPEC 7)
     for k in range(10):
         c.append((round(6.40 + 0.42 * k, 2), "snow"))
-    # Treppe: neun Stufen
-    for j in range(9):
-        c.append((round(10.55 + 0.19 * j, 2), "step"))
+    # Treppe: acht Stufen auf Treppenfeld 1-8, Bodenkontakt wie im Bild (SPEC 4.3, 7): 10.74 + 0.19 k
+    for k in range(8):
+        c.append((round(10.74 + 0.19 * k, 2), "step"))
     # Boden: drei leichtere Schritte, dann Tür
     for t in (12.26, 12.42, 12.58):
         c.append((t, "floor"))

@@ -132,7 +132,7 @@ Feet (300, 1300). Hip (300, 1020). Shoulder (300, 840). Neck top 826. Head centr
 Beats (times absolute):
 - 2.00–3.00: idle, torso rotates ±1.5° about hip, sine.inOut, period 2.0 s. Arms hang (upper arm 0°, forearm 0°).
 - 3.00–3.40: head turns toward the window: neck rotation 0° → -12° (power2.out, 0.40 s). Body stays still.
-- 3.40–4.20: near arm (left arm, the one nearer the window) raises to the glass: upper arm 0° → 70° (toward window), forearm 0° → -35° (expo.out, 0.80 s). Hand ends at (460, 960), touching the glass at its lower edge.
+- 3.40–4.20: near arm (left arm, the one nearer the window) raises to the glass: upper arm 0° → −70° (toward window), forearm 0° → +35° (expo.out, 0.80 s). Hand ends at (461, 960), touching the glass at its lower edge. (Sign amended in Fix-Runde 5, see Änderungen.)
 - 4.20–5.20: hold, hand flat on glass; head tilts to -18° (stays).
 - 5.20–6.30: slow breathing only (torso ±1°, 2.0 s period). Right arm remains hanging.
 - Legs: straight throughout (thigh 0°, shin 0°, foot horizontal).
@@ -255,7 +255,7 @@ Feet on tread j: feet x = x_j - 40, y = y_j (the figure stands on the tread’s 
 Thigh 108 px, shin 108 px, torso 138 px, head r 31, upper arm 85 px, forearm 77 px.
 
 Beats (absolute):
-- 10.60–12.07: run down the stairs, 9 steps, one step every 0.19 s (feet touch at 10.55 + 0.19 j, j = 0…8; see §7). Per step: torso lean forward 12° (constant), hip rotates ±28° alternating (thigh from +28° to -28°), knee bends 0 → 40° at mid-air (shin rotation), arms swing ±35° at the shoulder, opposite to the legs. Figure translates diagonally down-left by the tread offset; the drawing lands on the tread every 0.19 s.
+- 10.60–12.07: run down the stairs, one step every 0.19 s. Feet touch treads 1–8 at 10.74 + 0.19 k (k = 0…7; see §7). Tread 0 is the start point at 10.60. The last drop to the floor lands at 12.12. Per step: torso lean forward 12° (constant), hip rotates ±28° alternating (thigh from +28° to -28°), knee bends 0 → 40° at mid-air (shin rotation), arms swing ±35° at the shoulder, opposite to the legs. Figure translates diagonally down-left by the tread offset; the drawing lands on the tread every 0.19 s.
 - 12.07–12.60: at the floor, walk-run to the left: thigh ±20°, shin ±12°, torso 6° lean. Feet at (880, 1340) → (760, 1340), power2.out, duration 0.53 s.
 - 12.60–12.90: slow to stop: torso rotates back to 0° (0.30 s, power2.out), feet at x 760.
 - 12.90–13.60: right arm (near arm) raises to the lock: upper arm 0° → -60° (toward the door), forearm 0° → -65° (expo.out, 0.50 s). Hand reaches the knob at (690, 880). Head turns to face the door: neck rotation -15°.
@@ -369,7 +369,7 @@ Cue list (times in seconds; hits.wav unless noted):
 | 0.00–2.00 | bed only (wind, gain 0.45) | title card |
 | 2.02–25.40 | voice-timed.wav (narration) | S1 to S6 captions |
 | 6.40, 6.82, 7.24, 7.66, 8.08, 8.50, 8.92, 9.34, 9.76, 10.18 | snow crunch ×10 | prints k 0–9 |
-| 10.55, 10.74, 10.93, 11.12, 11.31, 11.50, 11.69, 11.88, 12.07 | stair step ×9 | figure feet touch treads j 0–8 |
+| 10.74, 10.93, 11.12, 11.31, 11.50, 11.69, 11.88, 12.07 | stair step ×8 | figure feet touch treads 1–8 (Fix-Runde 5, see Änderungen) |
 | 12.26, 12.42, 12.58 | floor step ×3 (lighter, gain -13 dB) | walk to the door |
 | 12.90 | door thump (heavy) | arrival at the door |
 | 13.70, 13.80, 13.90, 14.00, 14.10, 14.20, 14.30 | lock rattle click ×7 | rattle beats §6.2 |
@@ -378,7 +378,7 @@ Cue list (times in seconds; hits.wav unless noted):
 | 17.10 | rumble | ground shake, S5 |
 | 20.62, 20.90, 21.18, 21.46, 21.74, 22.02 | ceiling thump ×6 | ceiling prints p1–p6 |
 
-Hit peaks: each hit lands on its picture start, peaks one frame later (33 ms) per the sound reference. Every hit is 3–6 dB above the bed at its time.
+Hit peaks: each hit lands on its picture start, peaks one frame later (33 ms) per the sound reference. Every hit is 3–6 dB above the bed at its time: the hit peak in the 66 ms after its onset (cue + 33 ms) is 4.5 dB above the peak of sfx-bed × 0.45 in the same window (Fix-Runde 5, see Änderungen).
 Levels: voice -16 LUFS integrated target; bed and hits below voice. True peak ≤ -1 dBTP. Run `npx hyperframes audio <video> --json` after render to check hits and loudness.
 
 ---
@@ -559,7 +559,7 @@ Copied from BRIEF.md (1–8) and added spec-specific items (9–22).
 7. `npx hyperframes@0.9.17 check --json` shows no errors, no contrast warnings, no layout warnings.
 8. The end card (§10) shows the question „GEHST DU NACH OBEN?“, two buttons („NACHSCHAUEN“ red, „LIEBER NICHT“ green), the hint „STIMM IN DEN KOMMENTAREN AB“, and the folge tag „FOLGE FÜR TEIL 2“; each text is visible at least 2 s (table §10.2).
 9. All on-screen text is German. No English labels in the video.
-10. Figure motion is by rotated limbs (§2.2, §4.3, §6.2, §8.2, §9.3), not a sliding figure. Run-down-stairs beats are §4.3 (9 treads, 0.19 s each).
+10. Figure motion is by rotated limbs (§2.2, §4.3, §6.2, §8.2, §9.3), not a sliding figure. Run-down-stairs beats are §4.3 (8 landings on treads 1–8, 0.19 s apart).
 11. S1 figure raises its arm to the glass (3.40–4.20) and holds it there until 5.20. The hand is on the glass, not beside it.
 12. S2 footprints appear one by one at the times in §3.2 (6.40 to 10.18, step 0.42 s), each with a scale-in and opacity entrance.
 13. S3 includes the stair run, the door, the lock escutcheon and knob, and the rattle at 13.70–14.30.
@@ -587,3 +587,9 @@ Copied from BRIEF.md (1–8) and added spec-specific items (9–22).
 ## Änderungen
 
 - **Fix-Runde 4, F6 (REVIEW3 A7), Decke-Abdrücke (§9.2):** Entscheidung: die sechs Abdrücke `#s7-p1` bis `#s7-p6` bleiben bei `rotate(180)` statt `rot 0°`. Der Brief verlangt Abdrücke, die auf dem Kopf stehen; die Abweichung von §9.2 ist beabsichtigt. Zur Lesbarkeit wurde die Druckfarbe von `#05070c` auf `#dfe8f5` (Schnee) angehoben. Position, Größe und Zeitpunkte bleiben wie in §9.2.
+
+- **Fix-Runde 5, F-S1 (REVIEW4, Lautstärke Schläge, §7):** Die Pegelung in `scripts/make_hits.py` misst den Schlag und das Bett jetzt im selben Fenster von 66 ms ab Einsatz (Cue + 33 ms). Jeder Schlag liegt auf Bett × 0.45 + 4.5 dB. Begründung für die Fensterlänge: Die Klicks liegen 0.10 s auseinander, ein 120-ms-Fenster würde den nächsten Klick mitmessen (13.90 s ergab dann 6.45 dB). Gemessen an `assets/hits.wav` (38 Schläge): 4.25–4.73 dB, alle innerhalb 3–6 dB. Der Generator selbst liefert exakt 4.50 dB pro Schlag; die Abweichung in der Datei kommt nur von Ausläufern der Nachbarschläge.
+- **Fix-Runde 5, F-S3 (REVIEW4, Treppe Ton gegen Bild, §4.3 und §7):** Entscheidung Option (a): Das Bild bleibt wie spezifiziert (Tweens ergeben Bodenkontakt 10.74 + 0.19 k). Die Treppen-Schläge sind jetzt bei 10.74 + 0.19 k, k = 0…7 (acht Schläge, 10.74 bis 12.07). Tritt 0 ist der Startpunkt bei 10.60 und bekommt keinen Schlag. Der letzte Tween (Fuß auf den Boden) endet bei 12.12 und bekommt bewusst keinen eigenen Schlag, weil er 0.05 s nach dem achten Schlag läge. Die Zahl der Treppenschläge geht damit von 9 auf 8. Die Bodenschritte (12.26, 12.42, 12.58) und die Tür (12.90) bleiben unverändert.
+- **Fix-Runde 5, F-S4 (REVIEW4, Arm an der Scheibe, §2.2):** Die Werte aus §2.2 (Oberarm +70°, Unterarm −35°) ergeben in dieser Figur das Gegenteil: Die Hand landet bei (139, 960), links im Zimmer, 320 px von der Scheibe entfernt (Schnappschuss bei 4.3 s geprüft). Das Vorzeichen der SVG-Drehung ist umgekehrt. Die Werte sind deshalb gespiegelt: Oberarm −70°, Unterarm +35°, gleiche Beträge, gleiche Zeiten. Die Hand landet bei (461, 960) an der unteren Kante der Scheibe. Der Schultergelenkpunkt (300, 840) bleibt unverändert.
+- **Fix-Runde 5, F-S7b (REVIEW4, Abspann-Layout, §10.1):** Frage oben 600, rote Taste 920, grüne Taste 1110, Hinweis 1300, Folge-Marke 140/1440, 700 × 84, 44 px. Zeilenhöhe der Frage 120 px, damit die Zeilen 600–720 und 720–840 wie in §10.1 liegen. Die beiden Türrahmen (#161a24) sind ergänzt. Das Zickzack-Polygon unten und der Hintergrund #0a0d16 sind entfernt; der Hintergrund ist jetzt #0d0f16 wie in §10.1.
+- **Fix-Runde 5, F-S2 und F-S7a (Schneeflocken, §0.3 und §10.1):** Halle (`s4-flur`) hat jetzt 18 Flocken nach der Formel aus §0.3 (`#s4-flk`, y +220 in 3.0 s). Abspann hat genau sechs Flocken (i = 0…5) in #dfe8f5 bei 0.85.
