@@ -254,6 +254,8 @@ Three prints at (366, 436, W 14), (392, 442, W 16), (418, 438, W 18), fill #2f3d
 Feet on tread j: feet x = x_j - 40, y = y_j (the figure stands on the tread’s top edge). Floor feet (880, 1340) then (760, 1340).
 Thigh 108 px, shin 108 px, torso 138 px, head r 31, upper arm 85 px, forearm 77 px.
 
+Fix-Runde 6, F3: Alle absoluten y-Ziele von `#s3-fig-pos` sind um +90 px verschoben (Start y 394.62 statt 304.62; Landungen 484.62 … 1114.62). Der Kopf liegt dadurch unter dem HUD-Label „HAUSTÜR“ (Oberkante Kopf etwa 190 bei 10.60 s, dann ≥ 240). Der letzte Tween zum Boden bleibt bei y 1124.62, damit die Füße auf dem Boden (1340) enden. Die Landungen liegen dadurch eine Stufe tiefer als oben beschrieben; die Schlag-Zeiten (10.74 + 0.19 k) bleiben unverändert.
+
 Beats (absolute):
 - 10.60–12.07: run down the stairs, one step every 0.19 s. Feet touch treads 1–8 at 10.74 + 0.19 k (k = 0…7; see §7). Tread 0 is the start point at 10.60. The last drop to the floor lands at 12.12. Per step: torso lean forward 12° (constant), hip rotates ±28° alternating (thigh from +28° to -28°), knee bends 0 → 40° at mid-air (shin rotation), arms swing ±35° at the shoulder, opposite to the legs. Figure translates diagonally down-left by the tread offset; the drawing lands on the tread every 0.19 s.
 - 12.07–12.60: at the floor, walk-run to the left: thigh ±20°, shin ±12°, torso 6° lean. Feet at (880, 1340) → (760, 1340), power2.out, duration 0.53 s.
@@ -485,6 +487,8 @@ Printed as ceiling marks: same symbol, rot 0° (toes point up = upside down rela
 
 Entrance per print: scale 1.25 → 1.00 (power4.out, 0.10 s) and opacity 0 → 0.85 in 0.08 s. Each entrance is paired with a red pulse (§9.4) and a ceiling thump (§7).
 
+Fix-Runde 6, F4: Abdruck p6 liegt jetzt bei Mitte (430, 1040) statt (430, 1120). Damit ragt er nicht mehr unter die Untertitel-Lasche (C17). Die Tabelle oben gilt für p6 nicht mehr.
+
 ### 9.3 Stick figure (H = 380, u = 0.73, looking up)
 
 Feet (200, 1760). Hip (200, 1556). Shoulder (200, 1425). Neck top 1415. Head centre (200, 1386), r 29. Thigh 102, shin 102, torso 131, upper arm 80, forearm 73. Figure faces the ceiling: neck -20° (head turned up) at rest.
@@ -593,3 +597,9 @@ Copied from BRIEF.md (1–8) and added spec-specific items (9–22).
 - **Fix-Runde 5, F-S4 (REVIEW4, Arm an der Scheibe, §2.2):** Die Werte aus §2.2 (Oberarm +70°, Unterarm −35°) ergeben in dieser Figur das Gegenteil: Die Hand landet bei (139, 960), links im Zimmer, 320 px von der Scheibe entfernt (Schnappschuss bei 4.3 s geprüft). Das Vorzeichen der SVG-Drehung ist umgekehrt. Die Werte sind deshalb gespiegelt: Oberarm −70°, Unterarm +35°, gleiche Beträge, gleiche Zeiten. Die Hand landet bei (461, 960) an der unteren Kante der Scheibe. Der Schultergelenkpunkt (300, 840) bleibt unverändert.
 - **Fix-Runde 5, F-S7b (REVIEW4, Abspann-Layout, §10.1):** Frage oben 600, rote Taste 920, grüne Taste 1110, Hinweis 1300, Folge-Marke 140/1440, 700 × 84, 44 px. Zeilenhöhe der Frage 120 px, damit die Zeilen 600–720 und 720–840 wie in §10.1 liegen. Die beiden Türrahmen (#161a24) sind ergänzt. Das Zickzack-Polygon unten und der Hintergrund #0a0d16 sind entfernt; der Hintergrund ist jetzt #0d0f16 wie in §10.1.
 - **Fix-Runde 5, F-S2 und F-S7a (Schneeflocken, §0.3 und §10.1):** Halle (`s4-flur`) hat jetzt 18 Flocken nach der Formel aus §0.3 (`#s4-flk`, y +220 in 3.0 s). Abspann hat genau sechs Flocken (i = 0…5) in #dfe8f5 bei 0.85.
+
+- **Fix-Runde 6, F1 (REVIEW5, Abspann-Marke, §10.1):** `#s8-folge` steht jetzt bei top 1400 statt 1440 (700 × 84 unverändert). Grund: Die Wasserzeichen-Pille reicht bis x 758 (nicht 900, wie §10.1 annahm). Ohne Verschiebung überlappte die Marke die Pille um etwa 82 × 17 px. Mit top 1400 liegt die Marke bei y 1400–1484 und die Pille bei 1507–1561.
+- **Fix-Runde 6, F2 (REVIEW5, Titelbreite, §1 und BRIEF Technische Vorgaben):** Titelzeile „FUSSSPUREN“ (`#s1-t1`) ist 124 px statt 150 px, damit sie innerhalb der 80-%-Titelsicherheit (x 108–972) liegt. Die Zeile ist etwa 850 px breit. Buchstabenabstand, Timing und Unschärfe bleiben wie in §1. Die Höhe 150 px in §1 gilt damit nicht mehr.
+- **Fix-Runde 6, F3 (REVIEW5, HUD-Konflikt, §4.3):** Die Stufenfigur ist um +90 px nach unten verschoben (siehe §4.3). Die Oberkante des Kopfs liegt während 10.60–10.93 s unter dem HUD-Label „HAUSTÜR“.
+- **Fix-Runde 6, F4 (REVIEW5, Deckenabdruck, §9.2):** Abdruck `#s7-p6` Mitte (430, 1040) statt (430, 1120), W 80 unverändert. Der Abdruck liegt damit nicht mehr unter der Untertitel-Lasche C17 (§9.2).
+- **Fix-Runde 6, F5 (REVIEW5, Bett-Schwanz, §7):** `assets/sfx-bed.wav` ist im Bereich 18.45–19.60 s (Samples 885600–940800) auf null gesetzt. Vorher lag bei 18.45–18.50 s ein Ausklang bei -48.5 dBFS. Jetzt ist der Bereich -240 dBFS. Das Dateiformat (48 kHz, Stereo, 16 Bit, 30 s) bleibt gleich. Die Schläge liegen in diesem Bereich nicht (letzter Schlag vor 18.45 s: Krach 16.95 und Grollen 17.10), daher ändern sich die Pegel nicht.
