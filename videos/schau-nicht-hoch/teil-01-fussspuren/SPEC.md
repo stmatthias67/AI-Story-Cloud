@@ -582,3 +582,8 @@ Copied from BRIEF.md (1–8) and added spec-specific items (9–22).
 - The old footprint placement on the window glass (S2 in the current index.html).
 - Text on the window glass.
 - Caption groups over more than one group at a time.
+
+
+## Änderungen
+
+- **Fix-Runde 4, F6 (REVIEW3 A7), Decke-Abdrücke (§9.2):** Entscheidung: die sechs Abdrücke `#s7-p1` bis `#s7-p6` bleiben bei `rotate(180)` statt `rot 0°`. Der Brief verlangt Abdrücke, die auf dem Kopf stehen; die Abweichung von §9.2 ist beabsichtigt. Zur Lesbarkeit wurde die Druckfarbe von `#05070c` auf `#dfe8f5` (Schnee) angehoben. Position, Größe und Zeitpunkte bleiben wie in §9.2.

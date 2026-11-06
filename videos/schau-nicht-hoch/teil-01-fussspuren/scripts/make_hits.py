@@ -21,6 +21,14 @@ SEED = 0xACE1
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 OUT = os.path.join(HERE, "..", "assets", "hits.wav")
+BED = os.path.join(HERE, "..", "assets", "sfx-bed.wav")
+# SPEC 7: Bett-Gain in der Mischung (index.html data-volume 0.45). Schläge werden auf das
+# effektive Bett gepegelt: Peak jedes Schlags im Fenster [Cue, Cue+WINDOW] liegt TARGET_DB
+# über dem Peak des Betts (mit BED_GAIN) im gleichen Fenster. 4.5 dB ist die Mitte von 3-6 dB.
+BED_GAIN = 0.45
+TARGET_DB = 4.5
+# Messfenster kleiner als der kleinste Schlagabstand (0.10 s): Nachbarschläge zählen nicht mit
+WINDOW = 0.09
 
 
 class Lfsr:
@@ -43,21 +51,57 @@ def decay(t, tau90):
     return math.exp(-t * math.log(100.0) / tau90)
 
 
+def load_bed_abs():
+    """Absoluter Samplewert (max. beider Kanäle, 0..1) des unveränderten Betts."""
+    with wave.open(BED, "rb") as w:
+        assert w.getframerate() == SR and w.getnchannels() == 2 and w.getsampwidth() == 2
+        assert w.getnframes() == N
+        raw = w.readframes(N)
+    vals = struct.unpack("<%dh" % (2 * N), raw)
+    return [max(abs(vals[2 * i]), abs(vals[2 * i + 1])) / 32768.0 for i in range(N)]
+
+
 class Bus:
     def __init__(self):
         self.buf = [0.0] * N
         self.rng = Lfsr(SEED)
+        self.bed = load_bed_abs()
+        self.cue = 0.0
+        self.kind = ""
+        self.report = []
 
     def add(self, t0, length, fn):
         i0 = int(round(t0 * SR))
         n = int(length * SR)
+        local = [0.0] * n
         for k in range(n):
+            if 0 <= i0 + k < N:
+                local[k] = fn(k / SR)
+        self.level(i0, local)
+
+    def level(self, i0, local):
+        j0 = int(round(self.cue * SR))
+        j1 = min(N, j0 + int(round(WINDOW * SR)))
+        bed_peak = max(self.bed[j0:j1]) * BED_GAIN
+        hit_peak = 0.0
+        for i in range(j0, j1):
+            k = i - i0
+            if 0 <= k < len(local):
+                hit_peak = max(hit_peak, abs(local[k]))
+        if bed_peak <= 0.0 or hit_peak <= 0.0:
+            raise ValueError("no level reference at cue %.2f" % self.cue)
+        target = bed_peak * 10.0 ** (TARGET_DB / 20.0)
+        g = target / hit_peak
+        for k, v in enumerate(local):
             i = i0 + k
-            if i < 0 or i >= N:
-                continue
-            self.buf[i] += fn(k / SR)
+            if 0 <= i < N:
+                self.buf[i] += g * v
+        self.report.append((self.cue, self.kind, 20 * math.log10(bed_peak),
+                            20 * math.log10(target), 20 * math.log10(g)))
 
     def hit(self, cue, kind):
+        self.cue = cue
+        self.kind = kind
         t0 = cue + LATENCY
         rng = self.rng
 
@@ -170,6 +214,8 @@ def main():
     bus = Bus()
     for t, kind in cues():
         bus.hit(t, kind)
+    for cue, kind, bed_db, tgt_db, gain_db in bus.report:
+        print("%6.2f %-8s bed_eff %6.2f dBFS  hit_target %6.2f dBFS  gain %6.2f dB" % (cue, kind, bed_db, tgt_db, gain_db))
     peak = max(abs(x) for x in bus.buf)
     limit = db(-1)  # True-Peak-Grenze -1 dBFS (Sample-Peak als Näherung)
     scale = min(1.0, limit / peak) if peak > 0 else 1.0
